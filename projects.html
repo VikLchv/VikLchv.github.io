@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viktorie Láchová · Data Projects</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interactive CV of Viktorie Láchová, Data & Analytics Engineer: skill map, data roles and every project behind them.">
+<meta property="og:title" content="Viktorie Láchová · Data Projects">
+<meta property="og:description" content="Interactive skill map linked to every data project since 2018.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+/* Projects page: skill web (click a skill), timeline + project cards, data roles, education. Tokens live in site.css. */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.55; margin: 0; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-block: 20px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 22px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.08; }
+h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -0.035em; }
+h2 { font-size: clamp(1.45rem, 3.2vw, 2rem); font-weight: 700; letter-spacing: -0.015em; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--sig); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sig); }
+.muted { color: var(--muted); }
+:focus-visible { outline: 2px solid var(--sig); outline-offset: 2px; }
+button { font: inherit; color: inherit; }
+
+/* hero */
+.hero { border-radius: 24px; padding: clamp(26px, 5vw, 56px) clamp(20px, 5vw, 56px); color: var(--hero-ink);
+  background: repeating-linear-gradient(90deg, rgba(245,238,223,0) 0 2px, rgba(245,238,223,0.06) 2px 3px, rgba(245,238,223,0) 3px 22px),
+    linear-gradient(150deg, var(--hero-a) 0%, var(--hero-b) 58%, var(--hero-c) 100%);
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+@media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
+.hero .eyebrow { color: #E9D9B4; }
+.hero-text { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.hero p { color: rgba(245, 238, 223, 0.9); font-size: 1.1rem; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 6px; }
+@media (max-width: 520px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.stat { border-top: 1px solid rgba(245,238,223,0.35); padding-top: 8px; }
+.stat b { display: block; font-family: var(--f-display); font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 0.8rem; color: rgba(245, 238, 223, 0.75); }
+.hero-web svg { width: 100%; max-width: 360px; display: block; margin: 0 auto; }
+.nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.nav a { color: var(--hero-ink); text-decoration: none; font-size: 0.86rem; border: 1px solid rgba(245,238,223,0.35); border-radius: 999px; padding: 4px 12px; }
+.nav a:hover { background: rgba(245,238,223,0.12); }
+
+section { background: var(--sheet); border: 1px solid var(--line); border-radius: 22px; padding: clamp(18px, 4vw, 34px); display: flex; flex-direction: column; gap: 18px; scroll-margin-top: 12px; }
+.sec-head { display: flex; flex-direction: column; gap: 6px; }
+
+/* skill map */
+.compare { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 880px) { .compare { grid-template-columns: 1fr; } }
+.big { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 6px; }
+.big svg { display: block; width: 100%; height: auto; }
+.side { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip { font-size: 0.84rem; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.chip i { width: 10px; height: 10px; border-radius: 3px; background: var(--rc, var(--sig)); opacity: 0.35; }
+.chip[aria-pressed="true"] { border-color: var(--rc, var(--sig)); background: var(--sheet-2); }
+.chip[aria-pressed="true"] i { opacity: 1; }
+.chip .n { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); }
+.keyrow { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.82rem; color: var(--muted); }
+.up { color: var(--up); font-weight: 600; } .down { color: var(--down); font-weight: 600; }
+svg text { font-family: var(--f-mono); }
+.ring { fill: none; stroke: var(--grid); stroke-width: 1; }
+.spoke { stroke: var(--grid); stroke-width: 1; }
+.spoke.on { stroke: var(--sig); stroke-width: 2; }
+.tick { fill: var(--muted); font-size: 10px; }
+.axbtn { cursor: pointer; }
+.axbtn text { fill: var(--ink); font-size: 14px; }
+.axbtn:hover text, .axbtn.on text { fill: var(--sig); font-weight: 600; }
+.axbtn .hit { fill: transparent; }
+.match { display: flex; flex-direction: column; gap: 7px; }
+.mrow { display: grid; grid-template-columns: 136px minmax(0, 1fr) 44px; gap: 10px; align-items: center; font-size: 0.86rem; }
+.mrow .bar { height: 9px; background: var(--sheet-2); border-radius: 999px; overflow: hidden; }
+.mrow .bar b { display: block; height: 100%; border-radius: 999px; background: var(--rc); }
+.mrow span:last-child { font-family: var(--f-mono); text-align: right; font-variant-numeric: tabular-nums; }
+.note { background: var(--sheet-2); border-radius: 14px; padding: 14px 16px; font-size: 0.9rem; }
+
+/* work */
+.filters { display: flex; flex-direction: column; gap: 10px; }
+.filter-label { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.active-filter { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.92rem; }
+.clear { border: 0; background: none; color: var(--sig); cursor: pointer; text-decoration: underline; padding: 0; }
+.tl { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; overflow-x: auto; }
+.tl svg { display: block; min-width: 760px; width: 100%; height: auto; }
+.tl .yr { fill: var(--muted); font-size: 11px; }
+.tl .lane { fill: var(--ink); font-size: 11px; font-weight: 500; }
+.tl .gl { stroke: var(--grid); stroke-width: 1; }
+.tl .item { cursor: pointer; transition: opacity .15s; }
+.tl .item.dim { opacity: 0.15; }
+.tl .item:hover rect, .tl .item:hover circle { stroke: var(--ink); stroke-width: 2; }
+.tl .barlabel { fill: var(--paper); font-size: 10.5px; pointer-events: none; }
+.tl .zoom { fill: var(--sig); font-size: 10px; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 960px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; text-align: left; cursor: pointer; }
+.card:hover { border-color: var(--kc); }
+.card .meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); }
+.card .kind { color: var(--kc); text-transform: uppercase; letter-spacing: 0.08em; }
+.card h3 { font-size: 1.12rem; }
+.card .org { font-size: 0.86rem; color: var(--muted); }
+.card p { font-size: 0.9rem; }
+.card .nums { display: flex; gap: 14px; flex-wrap: wrap; }
+.card .nums b { font-family: var(--f-display); font-size: 1.2rem; display: block; line-height: 1; }
+.card .nums span { font-size: 0.72rem; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; padding-top: 4px; }
+.tag { font-family: var(--f-mono); font-size: 0.68rem; padding: 2px 8px; border-radius: 999px; background: var(--sheet-2); color: var(--muted); }
+.tag.hit { background: var(--sig); color: var(--paper); }
+.draft { font-family: var(--f-mono); font-size: 0.66rem; color: var(--down); }
+.empty { color: var(--muted); padding: 10px 0; }
+
+/* dialog */
+dialog { border: 1px solid var(--line); border-radius: 22px; padding: 0; background: var(--sheet); color: var(--ink); width: min(760px, calc(100vw - 24px)); max-height: calc(100vh - 32px); }
+dialog::backdrop { background: rgba(30, 20, 12, 0.55); }
+.dlg { padding: clamp(20px, 4vw, 34px); display: flex; flex-direction: column; gap: 16px; }
+.dlg-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.x { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; width: 36px; height: 36px; cursor: pointer; flex: none; font-size: 1.1rem; }
+.dlg .nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.dlg .nums div { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+.dlg .nums b { font-family: var(--f-display); font-size: 1.6rem; font-weight: 800; display: block; line-height: 1.05; }
+.dlg .nums span { font-size: 0.78rem; color: var(--muted); }
+.dlg ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+.dlg li::marker { color: var(--sig); }
+.blk { display: flex; flex-direction: column; gap: 6px; }
+.blk h4 { margin: 0; font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.pending { color: var(--muted); font-style: italic; }
+
+/* roles */
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.role { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; min-width: 0; text-align: left; cursor: pointer; }
+.role:hover { border-color: var(--rc); }
+.role[aria-pressed="true"] { border-color: var(--rc); box-shadow: inset 0 0 0 1px var(--rc); }
+.role h3::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--rc); margin-right: 7px; }
+.role svg { width: 100%; max-width: 180px; height: auto; align-self: center; }
+.role p { font-size: 0.85rem; color: var(--muted); }
+.role.me { background: var(--sheet-2); cursor: default; }
+.shifts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 860px) { .shifts { grid-template-columns: 1fr; } }
+.shift { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.shift p { font-size: 0.9rem; color: var(--muted); }
+
+/* education */
+.edu { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 22px; }
+@media (max-width: 760px) { .edu { grid-template-columns: 1fr; } }
+.list { display: flex; flex-direction: column; }
+.li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.li:last-child { border-bottom: 0; }
+.li .when { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); padding-top: 2px; }
+.li p { font-size: 0.88rem; color: var(--muted); }
+footer { font-size: 0.8rem; color: var(--muted); padding: 0 4px; display: flex; flex-direction: column; gap: 4px; }
+@media (max-width: 480px) { .mrow { grid-template-columns: 112px minmax(0, 1fr) 40px; } }
+</style>
+
+<div class="wrap">
+  <nav class="topnav" aria-label="Pages">
+    <a class="brand" href="index.html"><i></i>Viktorie Láchová</a>
+    <div class="pages"><a href="index.html">CV</a><a href="projects.html" aria-current="page">Data projects</a><a href="how-i-work.html">How I work</a></div>
+  </nav>
+  <header class="hero">
+    <div class="hero-text">
+      <span class="eyebrow" id="h-eyebrow"></span>
+      <h1 id="h-name"></h1>
+      <p id="h-lede"></p>
+      <div class="stats" id="h-stats"></div>
+      <nav class="nav" aria-label="Sections">
+        <a href="#skills">Skill map</a><a href="#work">Projects</a><a href="#roles">Data roles</a><a href="#education">Education</a>
+      </nav>
+    </div>
+    <div class="hero-web" aria-hidden="true"><svg id="heroweb" viewBox="0 0 200 200"></svg></div>
+  </header>
+
+  <section id="skills">
+    <div class="sec-head">
+      <span class="eyebrow">Skill map</span>
+      <h2>Fourteen skills, one shape</h2>
+      <p class="muted">Each axis runs from 0 to 5. Click any skill to see the projects that prove it. Add data roles to compare my shape with theirs.</p>
+    </div>
+    <div class="compare">
+      <div class="big"><svg id="bigweb" viewBox="0 0 600 560" role="group" aria-label="Skill web, each skill is a button"></svg></div>
+      <div class="side">
+        <div class="chips" id="roleToggles"></div>
+        <div class="keyrow"><span><span class="up">▲</span> growing in value</span><span><span class="down">▼</span> routine taken over by AI</span></div>
+        <h3>Closest data roles</h3>
+        <div class="match" id="match"></div>
+        <p class="note" id="read"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sec-head">
+      <span class="eyebrow">Projects</span>
+      <h2>Everything behind the shape</h2>
+      <p class="muted">From the first HR dashboards in 2018 to the platforms I build today. Click anything on the timeline or a card for the full story.</p>
+    </div>
+    <div class="filters">
+      <span class="filter-label">Type</span>
+      <div class="chips" id="kindChips"></div>
+      <span class="filter-label">Skill</span>
+      <div class="chips" id="axisChips"></div>
+      <div class="active-filter" id="activeFilter" hidden></div>
+    </div>
+    <div class="tl"><svg id="timeline" viewBox="0 0 1000 300" role="img" aria-label="Timeline of projects from 2018"></svg></div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section id="roles">
+    <div class="sec-head">
+      <span class="eyebrow">Data roles in 2026</span>
+      <h2>How the data world changed</h2>
+      <p class="muted">Every role has its own silhouette. Axes follow the skill map order: business at the top, data on the right, operations and AI at the bottom, science on the left. Click a role to compare it with me above.</p>
+    </div>
+    <div class="grid" id="roleGrid"></div>
+    <div class="shifts">
+      <div class="shift"><h3>Modelling got cheaper</h3><p>Few people train their own models. Most use, tune and evaluate existing ones. Statistics and experiments stay, LLM evals joined them.</p></div>
+      <div class="shift"><h3>The AI Engineer arrived</h3><p>Apps on top of LLMs: RAG, agents, evals, deployment. Barely a role in 2024, one of the most wanted now.</p></div>
+      <div class="shift"><h3>Analysts are not dashboards</h3><p>AI writes the SQL and the basic charts. Value moved to the right question, the context and the recommendation.</p></div>
+      <div class="shift"><h3>Semantics is the new currency</h3><p>For AI to answer correctly over data, someone has to define what the data means. Semantic layers turn analytics engineers into context engineers.</p></div>
+      <div class="shift"><h3>Business analysis is back</h3><p>When AI speeds up the output, understanding the problem becomes the expensive part: requirements, processes, decisions.</p></div>
+      <div class="shift"><h3>The borders blurred</h3><p>One person with AI can ship the pipeline, the model, the report and the app. Companies look for people who deliver a whole data product.</p></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="sec-head">
+      <span class="eyebrow">Education</span>
+      <h2>Where it started</h2>
+    </div>
+    <div class="edu">
+      <div class="list" id="eduList"></div>
+      <div>
+        <h3 style="margin-bottom:6px">Certifications</h3>
+        <div class="list" id="certList"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Skill levels are a self-assessment on a 0 to 5 scale, backed by the projects listed under each skill.</span>
+    <span>Inspired by the “Types of Data Professionals” chart (2024), extended with three roles and three skills.</span>
+  </footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlg-title"><div class="dlg" id="dlgBody"></div></dialog>
+
+<script src="projects.js" charset="utf-8"></script>
+<script>
+const D = window.PORTFOLIO;
+const AXES = [
+  { k: "bi",    l: "Business insight", t: 1 },
+  { k: "stk",   l: "Stakeholders",     t: 1 },
+  { k: "story", l: "Storytelling",     t: 0 },
+  { k: "viz",   l: "Data viz",         t: 0 },
+  { k: "rep",   l: "Reporting",        t: -1 },
+  { k: "sem",   l: "Semantic models",  t: 1 },
+  { k: "db",    l: "Databases",        t: 0 },
+  { k: "pipe",  l: "Pipelines",        t: 0 },
+  { k: "dep",   l: "Deployment",       t: 0 },
+  { k: "ops",   l: "ML Ops",           t: 0 },
+  { k: "ai",    l: "AI & agents",      t: 1 },
+  { k: "ml",    l: "ML models",        t: -1 },
+  { k: "stats", l: "Statistics",       t: 0 },
+  { k: "exp",   l: "Experiments",      t: 0 },
+];
+const AXL = Object.fromEntries(AXES.map(a => [a.k, a.l]));
+const KINDS = [
+  { k: "job", l: "Full-time" }, { k: "freelance", l: "Freelance" },
+  { k: "project", l: "Own projects" }, { k: "creative", l: "Creative" },
+];
+const KL = Object.fromEntries(KINDS.map(k => [k.k, k.l]));
+const ME = D.person.web;
+const N = AXES.length;
+const NS = "http://www.w3.org/2000/svg";
+const $ = id => document.getElementById(id);
+const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const store = {
+  get(k, f) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch { return f; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const state = { axis: null, kinds: new Set(), roles: new Set(store.get("pf-roles", ["da", "ae"])) };
+const color = id => `var(--c-${id})`;
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmt = ym => { if (!ym) return "now"; const [y, m] = ym.split("-"); return `${MONTHS[+m - 1]} ${y}`; };
+const span = p => p.start === p.end ? fmt(p.start) : `${fmt(p.start)} to ${p.end ? fmt(p.end) : "now"}`;
+const ord = ym => { const [y, m] = ym.split("-").map(Number); return y + (m - 1) / 12; };
+
+/* ---------- radar ---------- */
+const ang = i => -Math.PI / 2 + i * 2 * Math.PI / N;
+const pt = (cx, cy, r, i) => [cx + r * Math.cos(ang(i)), cy + r * Math.sin(ang(i))];
+function grid(svg, cx, cy, R, ticks, on) {
+  for (let s = 1; s <= 5; s++) el("polygon", { points: AXES.map((_, i) => pt(cx, cy, R * s / 5, i).join(",")).join(" "), class: "ring" }, svg);
+  AXES.forEach((a, i) => { const [x, y] = pt(cx, cy, R, i); el("line", { x1: cx, y1: cy, x2: x, y2: y, class: "spoke" + (on === a.k ? " on" : "") }, svg); });
+  if (ticks) for (let s = 1; s <= 5; s++) el("text", { x: cx + 4, y: cy - R * s / 5 + 12, class: "tick" }, svg).textContent = s;
+}
+function shape(svg, cx, cy, R, vals, c, o = {}) {
+  el("polygon", { points: vals.map((v, i) => pt(cx, cy, R * v / 5, i).join(",")).join(" "), fill: c, "fill-opacity": o.fo ?? 0.18, stroke: c, "stroke-width": o.sw ?? 1.6, "stroke-linejoin": "round" }, svg);
+  if (o.dots) vals.forEach((v, i) => { const [x, y] = pt(cx, cy, R * v / 5, i); el("circle", { cx: x, cy: y, r: o.dots, fill: c }, svg); });
+}
+function mini(vals, c) {
+  const svg = el("svg", { viewBox: "0 0 160 160", "aria-hidden": "true" });
+  grid(svg, 80, 80, 66); shape(svg, 80, 80, 66, vals, c, { fo: 0.28, sw: 1.8, dots: 1.8 });
+  return svg;
+}
+function renderHeroWeb() {
+  const svg = $("heroweb"); svg.textContent = "";
+  for (let s = 1; s <= 5; s++) el("polygon", { points: AXES.map((_, i) => pt(100, 100, 88 * s / 5, i).join(",")).join(" "), fill: "none", stroke: "rgba(245,238,223,0.22)" }, svg);
+  AXES.forEach((_, i) => { const [x, y] = pt(100, 100, 88, i); el("line", { x1: 100, y1: 100, x2: x, y2: y, stroke: "rgba(245,238,223,0.18)" }, svg); });
+  el("polygon", { points: ME.map((v, i) => pt(100, 100, 88 * v / 5, i).join(",")).join(" "), fill: "rgba(233,217,180,0.32)", stroke: "#E9D9B4", "stroke-width": 2, "stroke-linejoin": "round" }, svg);
+}
+function renderBig() {
+  const svg = $("bigweb"); svg.textContent = "";
+  const cx = 300, cy = 282, R = 170;
+  grid(svg, cx, cy, R, true, state.axis);
+  D.roles.filter(r => state.roles.has(r.id)).forEach(r => shape(svg, cx, cy, R, r.v, color(r.id), { fo: 0.10, sw: 1.6 }));
+  shape(svg, cx, cy, R, ME, color("me"), { fo: 0.22, sw: 3, dots: 3.4 });
+  AXES.forEach((a, i) => {
+    const [x, y] = pt(cx, cy, R + 20, i);
+    const c = Math.cos(ang(i));
+    const anchor = Math.abs(c) < 0.15 ? "middle" : c > 0 ? "start" : "end";
+    const g = el("g", { class: "axbtn" + (state.axis === a.k ? " on" : ""), tabindex: 0, role: "button", "aria-label": `${a.l}: ${ME[i]} of 5, show projects` }, svg);
+    const w = a.l.length * 8.6 + 22, hx = anchor === "middle" ? x - w / 2 : anchor === "start" ? x - 4 : x - w + 4;
+    el("rect", { x: hx, y: y - 13, width: w, height: 24, rx: 6, class: "hit" }, g);
+    const t = el("text", { x, y: y + 5, "text-anchor": anchor }, g);
+    t.textContent = a.l;
+    if (a.t) { const s = el("tspan", { fill: a.t > 0 ? "var(--up)" : "var(--down)", dx: 4 }, t); s.textContent = a.t > 0 ? "▲" : "▼"; }
+    const go = () => { setAxis(state.axis === a.k ? null : a.k); if (state.axis) $("work").scrollIntoView(); };
+    g.addEventListener("click", go);
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+}
+function renderRoleToggles() {
+  const w = $("roleToggles"); w.textContent = "";
+  const me = document.createElement("span"); me.className = "chip"; me.setAttribute("aria-pressed", "true"); me.style.setProperty("--rc", color("me")); me.style.cursor = "default";
+  me.innerHTML = "<i></i>Me"; w.appendChild(me);
+  D.roles.forEach(r => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.style.setProperty("--rc", color(r.id));
+    b.setAttribute("aria-pressed", state.roles.has(r.id)); b.innerHTML = `<i></i>${esc(r.n)}`;
+    b.onclick = () => toggleRole(r.id); w.appendChild(b);
+  });
+}
+function renderMatch() {
+  const sc = D.roles.map(r => ({ r, s: Math.round(100 - ME.reduce((a, v, i) => a + Math.abs(v - r.v[i]), 0) / N / 5 * 100) })).sort((a, b) => b.s - a.s);
+  const w = $("match"); w.textContent = "";
+  sc.forEach(({ r, s }) => {
+    const row = document.createElement("div"); row.className = "mrow"; row.style.setProperty("--rc", color(r.id));
+    row.innerHTML = `<span>${esc(r.n)}</span><span class="bar"><b style="width:${s}%"></b></span><span>${s}%</span>`;
+    w.appendChild(row);
+  });
+  $("read").innerHTML = `My shape sits between <strong>${sc[0].r.n}</strong> and <strong>${sc[1].r.n}</strong>: the stakeholder and storytelling side of an analyst, the semantic models, databases and pipelines of an engineer. AI agents are the axis I am growing now.`;
+}
+function renderRoleGrid() {
+  const g = $("roleGrid"); g.textContent = "";
+  D.roles.forEach(r => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "role"; b.style.setProperty("--rc", color(r.id));
+    b.setAttribute("aria-pressed", state.roles.has(r.id));
+    b.innerHTML = `<h3>${esc(r.n)}</h3>`; b.appendChild(mini(r.v, color(r.id)));
+    const p = document.createElement("p"); p.textContent = r.d; b.appendChild(p);
+    b.onclick = () => toggleRole(r.id); g.appendChild(b);
+  });
+  const m = document.createElement("div"); m.className = "role me"; m.style.setProperty("--rc", color("me"));
+  m.innerHTML = `<h3>Me</h3>`; m.appendChild(mini(ME, color("me")));
+  const p = document.createElement("p"); p.textContent = "Analyst and analytics engineer in one, with business analysis and AI agents on top."; m.appendChild(p);
+  g.appendChild(m);
+}
+function toggleRole(id) {
+  state.roles.has(id) ? state.roles.delete(id) : state.roles.add(id);
+  store.set("pf-roles", [...state.roles]);
+  renderRoleToggles(); renderRoleGrid(); renderBig();
+}
+
+/* ---------- projects ---------- */
+const P = D.projects;
+const matches = p => (!state.axis || p.axes.includes(state.axis)) && (!state.kinds.size || state.kinds.has(p.kind));
+function renderFilters() {
+  const kc = $("kindChips"); kc.textContent = "";
+  KINDS.forEach(k => {
+    const n = P.filter(p => p.kind === k.k).length;
+    const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.style.setProperty("--rc", `var(--k-${k.k})`);
+    b.setAttribute("aria-pressed", state.kinds.has(k.k)); b.innerHTML = `<i></i>${k.l} <span class="n">${n}</span>`;
+    b.onclick = () => { state.kinds.has(k.k) ? state.kinds.delete(k.k) : state.kinds.add(k.k); renderWork(); };
+    kc.appendChild(b);
+  });
+  const ac = $("axisChips"); ac.textContent = "";
+  AXES.forEach(a => {
+    const n = P.filter(p => p.axes.includes(a.k)).length;
+    const b = document.createElement("button"); b.type = "button"; b.className = "chip";
+    b.setAttribute("aria-pressed", state.axis === a.k); b.innerHTML = `${a.l} <span class="n">${n}</span>`;
+    b.onclick = () => setAxis(state.axis === a.k ? null : a.k);
+    ac.appendChild(b);
+  });
+  const af = $("activeFilter");
+  const shown = P.filter(matches).length;
+  if (state.axis || state.kinds.size) {
+    af.hidden = false;
+    const parts = [];
+    if (state.axis) parts.push(`<strong>${AXL[state.axis]}</strong> (${ME[AXES.findIndex(a => a.k === state.axis)]} of 5)`);
+    if (state.kinds.size) parts.push([...state.kinds].map(k => KL[k]).join(", "));
+    af.innerHTML = `<span>${shown} of ${P.length} projects · ${parts.join(" · ")}</span>`;
+    const c = document.createElement("button"); c.className = "clear"; c.type = "button"; c.textContent = "Show all";
+    c.onclick = () => { state.axis = null; state.kinds.clear(); renderBig(); renderWork(); };
+    af.appendChild(c);
+  } else af.hidden = true;
+}
+
+// piecewise time scale: 2018 to 2026 compressed, 2026 onwards zoomed in
+const X0 = 120, X1 = 980, T0 = 2018, TB = 2026, T1 = 2027.1, XB = X0 + (X1 - X0) * 0.42;
+const tx = t => t <= TB ? X0 + (t - T0) / (TB - T0) * (XB - X0) : XB + (t - TB) / (T1 - TB) * (X1 - XB);
+function renderTimeline() {
+  const svg = $("timeline"); svg.textContent = "";
+  const lanes = KINDS.map(k => ({ ...k, rows: [] }));
+  const items = P.map(p => {
+    const s = ord(p.start), e = p.end ? ord(p.end) + 1 / 12 : 2026 + 11 / 12;
+    return { p, x1: tx(s), x2: Math.max(tx(e), tx(s) + 4) };
+  });
+  // assign rows inside each lane so nothing overlaps
+  items.forEach(it => {
+    const lane = lanes.find(l => l.k === it.p.kind);
+    const long = it.x2 - it.x1 > 26;
+    const a = long ? it.x1 : (it.x1 + it.x2) / 2 - 8, b = long ? it.x2 : (it.x1 + it.x2) / 2 + 8;
+    let r = lane.rows.findIndex(row => row.every(([s, e]) => b + 3 < s || a - 3 > e));
+    if (r < 0) { lane.rows.push([]); r = lane.rows.length - 1; }
+    lane.rows[r].push([a, b]); it.row = r; it.long = long; it.lane = lane;
+  });
+  let y = 34; const RH = 22;
+  lanes.forEach(l => { l.y = y; y += Math.max(1, l.rows.length) * RH + 14; });
+  const H = y + 6;
+  svg.setAttribute("viewBox", `0 0 1000 ${H}`);
+  for (let yr = T0; yr <= 2026; yr++) {
+    const x = tx(yr);
+    el("line", { x1: x, y1: 22, x2: x, y2: H - 4, class: "gl" }, svg);
+    el("text", { x: x + 3, y: 16, class: "yr" }, svg).textContent = yr;
+  }
+  [4, 7, 10].forEach(m => { const x = tx(2026 + m / 12); el("line", { x1: x, y1: 26, x2: x, y2: H - 4, class: "gl", "stroke-dasharray": "2 4" }, svg); el("text", { x: x + 3, y: 16, class: "yr" }, svg).textContent = MONTHS[m]; });
+  el("text", { x: XB + 3, y: H - 8, class: "zoom" }, svg).textContent = "2026 zoomed in";
+  lanes.forEach(l => {
+    el("text", { x: 8, y: l.y + 15, class: "lane" }, svg).textContent = l.l;
+    if (l.k !== "job") el("line", { x1: 8, y1: l.y - 7, x2: 992, y2: l.y - 7, class: "gl" }, svg);
+  });
+  items.forEach(({ p, x1, x2, row, long, lane }) => {
+    const g = el("g", { class: "item" + (matches(p) ? "" : " dim"), tabindex: 0, role: "button", "aria-label": `${p.title}, ${span(p)}` }, svg);
+    el("title", {}, g).textContent = `${p.title} · ${p.org} · ${span(p)}`;
+    const yy = lane.y + row * RH;
+    const c = `var(--k-${p.kind})`;
+    if (long) {
+      el("rect", { x: x1, y: yy + 3, width: x2 - x1, height: 16, rx: 8, fill: c, "fill-opacity": p.upcoming ? 0.35 : 1 }, g);
+      const label = p.kind === "job" ? p.org.split(" · ")[0] : p.title;
+      if ((x2 - x1) > label.length * 6.2 + 14) el("text", { x: x1 + 8, y: yy + 14.5, class: "barlabel" }, g).textContent = label;
+    } else {
+      el("circle", { cx: (x1 + x2) / 2, cy: yy + 11, r: 7, fill: c }, g);
+    }
+    g.addEventListener("click", () => openProject(p.id));
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openProject(p.id); } });
+  });
+}
+function renderCards() {
+  const w = $("cards"); w.textContent = "";
+  const list = P.filter(matches);
+  if (!list.length) { w.innerHTML = `<p class="empty">No projects for this combination yet.</p>`; return; }
+  list.forEach(p => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "card"; b.style.setProperty("--kc", `var(--k-${p.kind})`);
+    const nums = (p.numbers || []).slice(0, 3).map(n => `<div><b>${esc(n.v)}</b><span>${esc(n.l)}</span></div>`).join("");
+    b.innerHTML = `
+      <div class="meta"><span class="kind">${KL[p.kind]}</span><span>${span(p)}</span></div>
+      <h3>${esc(p.title)}</h3>
+      <span class="org">${esc(p.org)}${p.role ? " · " + esc(p.role) : ""}</span>
+      <p>${esc(p.summary)}</p>
+      ${nums ? `<div class="nums">${nums}</div>` : ""}
+      <div class="tags">${p.axes.map(a => `<span class="tag${a === state.axis ? " hit" : ""}">${AXL[a]}</span>`).join("")}</div>
+      ${p.draft ? `<span class="draft">More details coming</span>` : ""}`;
+    b.onclick = () => openProject(p.id);
+    w.appendChild(b);
+  });
+}
+function renderWork() { renderFilters(); renderTimeline(); renderCards(); }
+function setAxis(k) { state.axis = k; renderBig(); renderWork(); }
+
+function openProject(id) {
+  const p = P.find(x => x.id === id); if (!p) return;
+  const nums = (p.numbers || []).map(n => `<div><b>${esc(n.v)}</b><span>${esc(n.l)}</span></div>`).join("");
+  const block = (h, body) => `<div class="blk"><h4>${h}</h4>${body}</div>`;
+  const txt = v => v ? `<p>${esc(v)}</p>` : `<p class="pending">Coming soon.</p>`;
+  $("dlgBody").innerHTML = `
+    <div class="dlg-top">
+      <div class="sec-head"><span class="eyebrow">${KL[p.kind]} · ${span(p)}</span><h2 id="dlg-title">${esc(p.title)}</h2>
+      <span class="muted">${esc(p.org)}${p.role ? " · " + esc(p.role) : ""}</span></div>
+      <button class="x" type="button" aria-label="Close" id="dlgClose">×</button>
+    </div>
+    <p>${esc(p.summary)}</p>
+    ${nums ? `<div class="nums">${nums}</div>` : ""}
+    ${p.did && p.did.length ? block("What I did", `<ul>${p.did.map(d => `<li>${esc(d)}</li>`).join("")}</ul>`) : ""}
+    ${block("Result", txt(p.result))}
+    ${block("Impact", txt(p.impact))}
+    ${p.stack && p.stack.length ? block("Stack", `<div class="tags">${p.stack.map(s => `<span class="tag">${esc(s)}</span>`).join("")}</div>`) : ""}
+    ${block("Skills", `<div class="chips">${p.axes.map(a => `<button type="button" class="chip" data-ax="${a}">${AXL[a]}</button>`).join("")}</div>`)}
+    ${p.links ? block("Links", p.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.l)}</a>`).join(" · ")) : ""}`;
+  const dlg = $("dlg");
+  $("dlgClose").onclick = () => dlg.close();
+  dlg.querySelectorAll("[data-ax]").forEach(b => b.onclick = () => { dlg.close(); setAxis(b.dataset.ax); $("work").scrollIntoView(); });
+  if (!dlg.open) dlg.showModal();
+  try { history.replaceState(null, "", "#" + p.id); } catch {}
+}
+$("dlg").addEventListener("close", () => { try { history.replaceState(null, "", location.pathname + location.search); } catch {} });
+$("dlg").addEventListener("click", e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+
+/* ---------- hero + education ---------- */
+function renderHero() {
+  const pp = D.person;
+  $("h-eyebrow").textContent = `${pp.title} · ${pp.location}`;
+  $("h-name").textContent = pp.name;
+  $("h-lede").textContent = pp.lede;
+  const years = new Date().getFullYear() - 2018;
+  const orgs = new Set(P.filter(p => p.kind === "job" || p.kind === "freelance").map(p => p.org.split(" · ")[0])).size;
+  const stats = [[years, "years in data"], [P.filter(p => !p.upcoming).length, "projects"], [orgs, "companies & clients"], [D.certs.length, "certifications"]];
+  $("h-stats").innerHTML = stats.map(([v, l]) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
+}
+function renderEdu() {
+  $("eduList").innerHTML = D.education.map(e => `<div class="li"><span class="when">${esc(e.when)}</span><div><h3>${esc(e.what)}</h3><p>${esc(e.where)}. ${esc(e.note)}</p></div></div>`).join("");
+  $("certList").innerHTML = D.certs.map(c => `<div class="li"><span class="when">${esc(c.when)}</span><div><h3>${esc(c.what)}</h3><p>${esc(c.by)}</p></div></div>`).join("");
+}
+
+renderHero(); renderHeroWeb(); renderBig(); renderRoleToggles(); renderMatch(); renderRoleGrid(); renderWork(); renderEdu();
+const h = location.hash.slice(1);
+if (h && P.some(p => p.id === h)) openProject(h);
+</script>

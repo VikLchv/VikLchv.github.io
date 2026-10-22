@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viktorie Láchová · CV</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="CV of Viktorie Láchová, Senior Data Engineer in Prague: data products, Microsoft Fabric, dbt, semantic models.">
+<meta property="og:title" content="Viktorie Láchová · CV">
+<meta property="og:description" content="Senior Data Engineer in Prague: data products, Microsoft Fabric, dbt, semantic models.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+/* CV page: brown-to-moss hero with "now" card, stat strip, career arc, then experience next to a sidebar of strengths, stack and education. */
+.hero { border-radius: 24px; padding: clamp(26px, 5vw, 52px) clamp(20px, 5vw, 52px); color: var(--hero-ink);
+  background: repeating-linear-gradient(90deg, rgba(245,238,223,0) 0 2px, rgba(245,238,223,0.06) 2px 3px, rgba(245,238,223,0) 3px 22px),
+    linear-gradient(150deg, var(--hero-a) 0%, var(--hero-b) 55%, var(--hero-c) 100%);
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; align-items: end; }
+@media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
+.hero .eyebrow { color: #E9D9B4; }
+.hero-text { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.hero .lede { color: rgba(243, 240, 226, 0.9); font-size: 1.12rem; }
+.contact { display: flex; flex-wrap: wrap; gap: 8px; }
+.contact a, .contact button { color: var(--hero-ink); text-decoration: none; font-size: 0.88rem; border: 1px solid rgba(243,240,226,0.38); border-radius: 999px; padding: 6px 14px; background: transparent; cursor: pointer; }
+.contact a:hover, .contact button:hover { background: rgba(243,240,226,0.12); }
+.contact .primary { background: #E9D9B4; color: #2E1D12; border-color: #E9D9B4; font-weight: 600; }
+.contact .primary:hover { background: #F3E8CC; }
+.now { background: rgba(243,240,226,0.10); border: 1px solid rgba(243,240,226,0.28); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.now h2 { font-size: 1rem; font-family: var(--f-mono); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #E9D9B4; }
+.now-item { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; }
+.now-item i { width: 10px; height: 10px; border-radius: 50%; background: #B9CFA0; margin-top: 6px; }
+.now-item.next i { background: #E9D9B4; }
+.now-item b { display: block; font-family: var(--f-display); font-size: 1.05rem; }
+.now-item span { font-size: 0.86rem; color: rgba(243,240,226,0.78); }
+
+.stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 860px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.stat { background: var(--sheet); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.stat b { font-family: var(--f-display); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 0.82rem; color: var(--muted); }
+.stat:first-child { background: var(--moss); border-color: var(--moss); color: var(--paper); }
+.stat:first-child span { color: var(--paper); opacity: 0.85; }
+
+.arc { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; position: relative; }
+@media (max-width: 760px) { .arc { grid-template-columns: 1fr; gap: 14px; } }
+.step { display: flex; flex-direction: column; gap: 6px; padding: 0 14px 0 0; position: relative; min-width: 0; }
+.step .dot { display: flex; align-items: center; gap: 8px; }
+.step .dot i { width: 14px; height: 14px; border-radius: 50%; background: var(--sc); flex: none; box-shadow: 0 0 0 4px var(--sheet); position: relative; z-index: 1; }
+.step .dot::after { content: ""; flex: 1; height: 2px; background: var(--line); margin-left: -4px; }
+.step:last-child .dot::after { display: none; }
+@media (max-width: 760px) { .step .dot::after { display: none; } }
+.step .yr { font-family: var(--f-mono); font-size: 0.74rem; color: var(--muted); }
+.step h3 { font-size: 1rem; }
+.step p { font-size: 0.86rem; color: var(--muted); }
+
+.cols { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+.side { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+
+.job { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 18px; padding: 20px 0; border-top: 1px solid var(--line); }
+.job:first-of-type { border-top: 0; padding-top: 4px; }
+@media (max-width: 560px) { .job { grid-template-columns: 1fr; gap: 6px; } }
+.when { font-family: var(--f-mono); font-size: 0.76rem; color: var(--muted); line-height: 1.5; padding-top: 3px; }
+.when .badge { display: inline-block; margin-top: 6px; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--sheet-2); color: var(--sig); }
+.what { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.what h3 { font-size: 1.2rem; }
+.what .org { color: var(--sig); font-weight: 600; font-size: 0.95rem; }
+.what .ctx { color: var(--muted); font-size: 0.92rem; }
+.what ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; font-size: 0.94rem; }
+.what li::marker { color: var(--moss); }
+.what strong { font-weight: 600; }
+.proj { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
+.proj span { font-family: var(--f-mono); font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.proj a { font-size: 0.8rem; text-decoration: none; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
+.proj a:hover { border-color: var(--moss); color: var(--moss); }
+
+.strengths { display: flex; flex-direction: column; gap: 12px; }
+.strength { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; }
+.strength .ic { width: 30px; height: 30px; border-radius: 10px; background: var(--sheet-2); display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; color: var(--moss); font-size: 0.9rem; }
+.strength b { display: block; font-size: 0.95rem; }
+.strength span { font-size: 0.86rem; color: var(--muted); }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.stack h4 { margin: 0; font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.stack .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.stack .tag { font-size: 0.74rem; padding: 3px 9px; color: var(--ink); }
+.li { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); }
+.li:first-of-type { border-top: 0; }
+.li .yr { font-family: var(--f-mono); font-size: 0.74rem; color: var(--muted); padding-top: 2px; }
+.li b { display: block; font-size: 0.94rem; }
+.li span { font-size: 0.84rem; color: var(--muted); }
+.beyond { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .beyond { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .beyond { grid-template-columns: 1fr; } }
+.b { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.b p { font-size: 0.88rem; color: var(--muted); }
+.cta { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--sheet-2); }
+.cta a { background: var(--ink); color: var(--paper); text-decoration: none; padding: 10px 18px; border-radius: 999px; font-weight: 600; }
+footer { font-size: 0.8rem; color: var(--muted); padding: 0 4px; }
+</style>
+
+<div class="wrap">
+  <nav class="topnav" aria-label="Pages">
+    <a class="brand" href="index.html"><i></i>Viktorie Láchová</a>
+    <div class="pages"><a href="index.html" aria-current="page">CV</a><a href="projects.html">Data projects</a><a href="how-i-work.html">How I work</a></div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-text">
+      <span class="eyebrow">Senior Data Engineer · Prague</span>
+      <h1>Ing. Viktorie Láchová</h1>
+      <p class="lede">I build data products that help organisations make better decisions. Eight years from HR reporting to enterprise platforms on Microsoft Fabric, always close to the people who use the numbers.</p>
+      <div class="contact">
+        <a class="primary" href="projects.html">See my data projects →</a>
+        <a href="https://www.linkedin.com/in/viktorielachova" target="_blank" rel="noopener">LinkedIn</a>
+        <button type="button" id="copyMail" data-mail="viktorie.lachova@gmail.com">viktorie.lachova@gmail.com</button>
+      </div>
+    </div>
+    <aside class="now" aria-label="Now">
+      <h2>Now</h2>
+      <div class="now-item next"><i></i><div><b>Senior Data Engineer, STRV</b><span>Starting 2 November 2026</span></div></div>
+      <div class="now-item"><i></i><div><b>Reporting consultant, DreamPro</b><span>Management reporting in their own system, since August 2026</span></div></div>
+      <div class="now-item"><i></i><div><b>Creative AI, AIMOREAL</b><span>AI films and cost analytics for the studio</span></div></div>
+    </aside>
+  </header>
+
+  <div class="stats" aria-label="Highlights">
+    <div class="stat"><b>8 yrs</b><span>in data, since 2018</span></div>
+    <div class="stat"><b>Billions</b><span>of rows modelled, 6 markets</span></div>
+    <div class="stat"><b>98.5%</b><span>bookings auto-deduplicated in a live migration</span></div>
+    <div class="stat"><b>2×</b><span>Microsoft certified, PL-300 and DP-600</span></div>
+    <div class="stat"><b>Dean's</b><span>Award for my master's thesis</span></div>
+  </div>
+
+  <section aria-labelledby="arc-h">
+    <div class="sec-head"><span class="eyebrow">The thread</span><h2 id="arc-h">From HR reports to data products</h2></div>
+    <div class="arc">
+      <div class="step" style="--sc: var(--c-ba)"><div class="dot"><i></i></div><span class="yr">2018</span><h3>HR analytics</h3><p>The human context behind a metric.</p></div>
+      <div class="step" style="--sc: var(--c-da)"><div class="dot"><i></i></div><span class="yr">2022</span><h3>BI & Power BI</h3><p>Requirements, dashboards, automation.</p></div>
+      <div class="step" style="--sc: var(--c-ae)"><div class="dot"><i></i></div><span class="yr">2024</span><h3>Cloud BI</h3><p>Snowflake, Fabric, semantic models at scale.</p></div>
+      <div class="step" style="--sc: var(--c-de)"><div class="dot"><i></i></div><span class="yr">2025</span><h3>Data engineering</h3><p>End-to-end platforms, dbt, migrations.</p></div>
+      <div class="step" style="--sc: var(--c-me)"><div class="dot"><i></i></div><span class="yr">2026</span><h3>Data products & AI</h3><p>Own products, agents, consulting.</p></div>
+    </div>
+  </section>
+
+  <div class="cols">
+    <section aria-labelledby="exp-h">
+      <div class="sec-head"><span class="eyebrow">Experience</span><h2 id="exp-h">Where I built it</h2></div>
+
+      <article class="job">
+        <div class="when">Aug 2026 to now<br><span class="badge">Freelance</span></div>
+        <div class="what">
+          <h3>Data & reporting consultant</h3>
+          <span class="org">Independent · DreamPro, AIMOREAL</span>
+          <ul>
+            <li>Lead the <strong>management reporting for DreamPro</strong> inside their own Supabase system, about 700 business cases a year, with a client decision log of 39 decisions.</li>
+            <li>Design <strong>cost analytics for a creative AI studio</strong>, so every delivered video can show its real cost and return.</li>
+          </ul>
+          <div class="proj"><span>Projects</span><a href="projects.html#dreampro">DreamPro reporting</a><a href="projects.html#aimoreal-cost">Cost analytics</a><a href="projects.html#aimoreal-tracker">AIMOREAL tracker</a></div>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when">Aug 2025 to Oct 2026<br>Prague, hybrid<br><span class="badge">Full-time</span></div>
+        <div class="what">
+          <h3>Data Engineer, Data & Analytics</h3>
+          <span class="org">HX Expeditions</span>
+          <span class="ctx">Expedition cruise company. Nexus, a company-wide programme modernising operational systems on Microsoft Fabric.</span>
+          <ul>
+            <li>Built the <strong>revenue data model</strong> from the reservation system, joined with Salesforce, for commercial, revenue management, leadership and guest excellence.</li>
+            <li><strong>Owned the data side of a live reservation migration</strong> the data team was not invited to plan: 98.5% of bookings deduplicated automatically, 30 mismatch scenarios, a full audit trail.</li>
+            <li>Day-to-day <strong>data and analytics engineering in dbt</strong>: grain and join cardinality, incremental loads and Delta MERGE, Warehouse to Lakehouse.</li>
+            <li>Competitor insights, enterprise fulfillment and HR operational reporting.</li>
+            <li>Informal lead: held platform context, trained colleagues on dbt, SQL, modelling and Fabric capacity.</li>
+          </ul>
+          <div class="proj"><span>Projects</span><a href="projects.html#hx-nexus">Nexus revenue model</a><a href="projects.html#hx-migration">Reservation migration</a><a href="projects.html#hx-competitor">Competitor insights</a><a href="projects.html#hx-fulfillment">Fulfillment report</a><a href="projects.html#hx-inaturalist">HX × iNaturalist</a></div>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when">Oct 2024 to Jul 2025<br>Prague<br><span class="badge">Full-time</span></div>
+        <div class="what">
+          <h3>BI Analyst, Cloud & Architecture</h3>
+          <span class="org">Billigence</span>
+          <span class="ctx">Data consultancy, Microsoft Fabric and Power BI for international clients.</span>
+          <ul>
+            <li>Business analysis and the <strong>data model for near-real-time TV viewership</strong> at CME: billions of rows, 6 European markets, minute grain.</li>
+            <li>Built <strong>resource capacity reporting end to end on my own</strong>: ingestion from Prometheus, pipeline, Fabric Lakehouse, model and reports.</li>
+            <li>Ran and extended cross-country HR analytics on Azure Synapse.</li>
+          </ul>
+          <div class="proj"><span>Projects</span><a href="projects.html#billigence-tv">TV viewership</a><a href="projects.html#billigence-prometheus">Capacity reporting</a><a href="projects.html#billigence-hr">HR analytics</a></div>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when">Jun 2024 to Sep 2024<br><span class="badge">Full-time</span></div>
+        <div class="what">
+          <h3>BI Developer, Global IT Data & Analytics</h3>
+          <span class="org">Edwards Lifesciences</span>
+          <ul>
+            <li>Global finance delivery on Snowflake and Power BI: <strong>intercompany finance and logistics</strong> on ledger data, logistics capacity optimisation.</li>
+            <li>Turned the inventory and sales model into an Analysis Services layer finance could use straight from Excel.</li>
+          </ul>
+          <div class="proj"><span>Projects</span><a href="projects.html#edwards-finance">Global finance BI</a></div>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when">Jul 2022 to May 2024<br><span class="badge">Full-time</span></div>
+        <div class="what">
+          <h3>Data Analyst, Commercial Ops & Business Strategy</h3>
+          <span class="org">Edwards Lifesciences</span>
+          <ul>
+            <li>Built an <strong>automated Showpad dashboard for four teams</strong>: Python from the REST API, HR data joined in, Power BI model, adoption plan per department.</li>
+            <li>Became my master's thesis <em>Dashboards automation</em>, awarded the Dean's Award.</li>
+            <li>Automated recurring reporting for commercial, finance and operations.</li>
+          </ul>
+          <div class="proj"><span>Projects</span><a href="projects.html#edwards-showpad">Showpad analytics</a></div>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when">Jun 2018 to Mar 2022<br><span class="badge">Full-time</span></div>
+        <div class="what">
+          <h3>HR Analyst</h3>
+          <span class="org">SSI Technologies · automotive</span>
+          <ul>
+            <li>Put together the first HR overview, analysed employee satisfaction (eNPS) and connected Excel sources into repeatable reports.</li>
+            <li>Learned Power BI on the job. This is where data became my thing.</li>
+          </ul>
+          <div class="proj"><span>Projects</span><a href="projects.html#ssi-hr">HR overview</a></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="side">
+      <section aria-labelledby="str-h">
+        <div class="sec-head"><span class="eyebrow">Strengths</span><h2 id="str-h">What I bring</h2></div>
+        <div class="strengths">
+          <div class="strength"><span class="ic">1</span><div><b>Business to data</b><span>I sit with the people who use the numbers and turn their questions into models.</span></div></div>
+          <div class="strength"><span class="ic">2</span><div><b>Semantic models</b><span>Clear grain, clear metrics, one definition everybody trusts.</span></div></div>
+          <div class="strength"><span class="ic">3</span><div><b>End-to-end ownership</b><span>From discovery and requirements to pipelines, reports and adoption.</span></div></div>
+          <div class="strength"><span class="ic">4</span><div><b>Calm in messy data</b><span>Migrations, duplicates, missing history: I find the rule that makes it explainable.</span></div></div>
+          <div class="strength"><span class="ic">5</span><div><b>AI-assisted engineering</b><span>Agents and Claude Code as daily tools, results always validated on the data.</span></div></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="stack-h">
+        <div class="sec-head"><span class="eyebrow">Toolbox</span><h2 id="stack-h">Stack</h2></div>
+        <div class="stack">
+          <div><h4>Data engineering</h4><div class="tags"><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">dbt</span><span class="tag">Microsoft Fabric</span><span class="tag">Lakehouse</span><span class="tag">Snowflake</span><span class="tag">Airflow</span><span class="tag">REST APIs</span></div></div>
+          <div><h4>Analytics</h4><div class="tags"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Semantic models</span><span class="tag">Data modelling</span><span class="tag">Power Query</span></div></div>
+          <div><h4>Platforms</h4><div class="tags"><span class="tag">Azure</span><span class="tag">Data Factory</span><span class="tag">Synapse</span><span class="tag">GCP · BigQuery</span><span class="tag">Supabase</span><span class="tag">Oracle</span><span class="tag">Git</span><span class="tag">Azure DevOps</span></div></div>
+          <div><h4>AI</h4><div class="tags"><span class="tag">Claude Code</span><span class="tag">Agents & skills</span><span class="tag">MCP</span></div></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="edu-h">
+        <div class="sec-head"><span class="eyebrow">Education</span><h2 id="edu-h">Studies & certificates</h2></div>
+        <div>
+          <div class="li"><span class="yr">2021-24</span><div><b>Ing., Information Management</b><span>University of Hradec Králové. Thesis <a href="https://theses.cz/id/qwyja7/" target="_blank" rel="noopener">Dashboards automation</a>, Dean's Award.</span></div></div>
+          <div class="li"><span class="yr">2022-23</span><div><b>Erasmus, Computer Science & IS</b><span>EPITA, Paris</span></div></div>
+          <div class="li"><span class="yr">2018-21</span><div><b>Bc., System Engineering</b><span>University of Hradec Králové</span></div></div>
+          <div class="li"><span class="yr">2025</span><div><b>DP-600 Fabric Analytics Engineer</b><span>Microsoft</span></div></div>
+          <div class="li"><span class="yr">2024</span><div><b>PL-300 Power BI Data Analyst</b><span>Microsoft</span></div></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <section aria-labelledby="bey-h">
+    <div class="sec-head"><span class="eyebrow">Beyond work</span><h2 id="bey-h">What I build for fun</h2></div>
+    <div class="beyond">
+      <div class="b"><h3>DATHEA</h3><p>A data-art studio turning real datasets about nature, science and culture into films.</p></div>
+      <div class="b"><h3>V.I.K.A.</h3><p>My own agent operating system on Claude Code: memory, commands, hooks and automations.</p></div>
+      <div class="b"><h3>techRebels</h3><p>Co-founder of a fun tech community, website live at <a href="https://wearetechrebels.com" target="_blank" rel="noopener">wearetechrebels.com</a>.</p></div>
+      <div class="b"><h3>Kids & tech</h3><p>Two coding activity books, a bug hunting card game and IT lessons for schools.</p></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="sec-head"><span class="eyebrow">Want the details?</span><h2>Every claim here has a project behind it.</h2></div>
+    <a href="projects.html">Explore the data projects →</a>
+  </section>
+
+  <footer>© 2026 Viktorie Láchová · Prague</footer>
+</div>
+
+<script>
+const btn = document.getElementById("copyMail");
+btn.addEventListener("click", async () => {
+  const mail = btn.dataset.mail;
+  try { await navigator.clipboard.writeText(mail); btn.textContent = "Email copied"; }
+  catch { const r = document.createRange(); r.selectNodeContents(btn); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  setTimeout(() => { btn.textContent = mail; }, 1800);
+});
+</script>

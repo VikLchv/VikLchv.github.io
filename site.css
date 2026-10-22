@@ -1,0 +1,59 @@
+/* Shared look for all portfolio pages: earthy brown to moss green, beige paper, Bricolage Grotesque + IBM Plex. */
+:root {
+  color-scheme: light;
+  --paper: #E9E6D6; --sheet: #F3F1E6; --sheet-2: #DFDCC7;
+  --ink: #2A2418; --muted: #625D4A; --line: #CBC7AD; --grid: #C3BEA0;
+  --hero-a: #4A2F1D; --hero-b: #5E4A2E; --hero-c: #3F5A3A; --hero-ink: #F3F0E2;
+  --sig: #6E4A2C; --moss: #4F6B3E; --up: #4F6B3E; --down: #9A5A36;
+  --c-de: #4F6440; --c-ae: #789064; --c-da: #9C8A4A; --c-ba: #9A6B48;
+  --c-ds: #66703A; --c-mle: #7D705A; --c-aie: #A8653E; --c-me: #4A2F1D;
+  --k-job: #6B4630; --k-freelance: #4F6B3E; --k-case: #9C8A4A; --k-project: #789064; --k-creative: #9A6B48;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --paper: #191B14; --sheet: #22251B; --sheet-2: #2C3023; --ink: #EEEBDC; --muted: #ADA98F; --line: #3B3F2E; --grid: #444833;
+  --hero-a: #2E1D12; --hero-b: #45361F; --hero-c: #2F4529;
+  --sig: #D2AE80; --moss: #A8BF8F; --up: #A8BF8F; --down: #D9977A;
+  --c-de: #94A585; --c-ae: #B3C6A2; --c-da: #D3C182; --c-ba: #CC9D7E; --c-ds: #A9AE68; --c-mle: #B8AA92; --c-aie: #E09B6E; --c-me: #E3C49A;
+  --k-job: #D2A57E; --k-freelance: #A8BF8F; --k-case: #D3C182; --k-project: #B3C6A2; --k-creative: #CC9D7E;
+} }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #191B14; --sheet: #22251B; --sheet-2: #2C3023; --ink: #EEEBDC; --muted: #ADA98F; --line: #3B3F2E; --grid: #444833;
+  --hero-a: #2E1D12; --hero-b: #45361F; --hero-c: #2F4529;
+  --sig: #D2AE80; --moss: #A8BF8F; --up: #A8BF8F; --down: #D9977A;
+  --c-de: #94A585; --c-ae: #B3C6A2; --c-da: #D3C182; --c-ba: #CC9D7E; --c-ds: #A9AE68; --c-mle: #B8AA92; --c-aie: #E09B6E; --c-me: #E3C49A;
+  --k-job: #D2A57E; --k-freelance: #A8BF8F; --k-case: #D3C182; --k-project: #B3C6A2; --k-creative: #CC9D7E;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.55; margin: 0; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-block: 14px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 22px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.08; }
+h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -0.035em; }
+h2 { font-size: clamp(1.45rem, 3.2vw, 2rem); font-weight: 700; letter-spacing: -0.015em; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--sig); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sig); }
+.muted { color: var(--muted); }
+:focus-visible { outline: 2px solid var(--sig); outline-offset: 2px; }
+button { font: inherit; color: inherit; }
+section { background: var(--sheet); border: 1px solid var(--line); border-radius: 22px; padding: clamp(18px, 4vw, 34px); display: flex; flex-direction: column; gap: 18px; scroll-margin-top: 12px; }
+.sec-head { display: flex; flex-direction: column; gap: 6px; }
+.tag { font-family: var(--f-mono); font-size: 0.68rem; padding: 2px 8px; border-radius: 999px; background: var(--sheet-2); color: var(--muted); }
+
+/* site navigation shared by every page */
+.topnav { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand { font-family: var(--f-display); font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+.brand i { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(150deg, var(--hero-a), var(--hero-c)); display: inline-block; }
+.pages { display: flex; gap: 4px; background: var(--sheet); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.pages a { text-decoration: none; color: var(--muted); font-size: 0.88rem; padding: 6px 14px; border-radius: 999px; }
+.pages a:hover { color: var(--ink); }
+.pages a[aria-current="page"] { background: var(--ink); color: var(--paper); }
