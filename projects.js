@@ -154,6 +154,14 @@ window.PORTFOLIO = {
       stack: ["FastAPI", "SQLAlchemy", "React", "Tailwind", "Docker", "Claude Code"], axes: ["sem", "db", "stk", "ai", "bi"],
     },
     {
+      id: "elc26", title: "Interviews at ELC26", org: "Engineering Leaders Community", kind: "project",
+      start: "2026-04", end: "2026-04", role: "Interviewer",
+      summary: "At the Engineering Leaders Community conference ELC26, I interviewed speakers about leadership, for example Riz Iqbal, Director of Engineering at Superhuman, on trust and listening to your team.",
+      did: ["Prepared and ran on-site interviews with conference speakers", "Questions about trust, leadership and hearing things you do not want to hear"],
+      result: "Interviews published by the Engineering Leaders Community on LinkedIn.", impact: "",
+      stack: [], axes: ["stk", "story"], draft: true,
+    },
+    {
       id: "brnk", title: "brnk live songbook", org: "Own product", kind: "project",
       start: "2026-05", end: "2026-06", role: "Founder, full-stack",
       summary: "Live songbook web app for musicians: chords, setlists and live mode.",
@@ -246,7 +254,7 @@ window.PORTFOLIO = {
       start: "2025-07", end: null, role: "Co-founder, web",
       summary: "A fun tech community, a social playground built around technology. Founded in July 2025, going out to the world in 2027. I built the website with an interactive swarm, games and a bug duel.",
       did: ["Co-founded the community in July 2025", "Astro and React site", "Supabase with RLS, realtime and magic links", "Cloudflare deploys from main, PR workflow"],
-      result: "Website live at wearetechrebels.com since October 2026, public launch planned for 2027.", impact: "", stack: ["Astro", "React", "Supabase", "Cloudflare"], axes: ["dep", "db"],
+      result: "Website live at wearetechrebels.com since October 2026, public launch planned for 2027.", impact: "", stack: ["Astro", "React", "Supabase", "Cloudflare"], axes: ["stk", "dep", "db"],
       links: [{ l: "wearetechrebels.com", u: "https://wearetechrebels.com" }],
     },
     {

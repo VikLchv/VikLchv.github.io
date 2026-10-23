@@ -96,6 +96,18 @@ h2.big { font-family: var(--d-display); font-weight: 800; text-transform: upperc
 .det.red { border-color: var(--d-red); }
 .det.red .lab { background: var(--d-red); color: var(--d-ink); }
 
+/* leadership: records with a big value, like detections but calmer */
+.leads { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--d-line); }
+@media (max-width: 900px) { .leads { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .leads { grid-template-columns: 1fr; } }
+.lead { padding: 18px; border-left: 1px solid var(--d-line); border-top: 1px solid var(--d-line); margin: -1px 0 0 -1px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.lead .k { font-family: var(--d-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--d-muted); }
+.lead b { font-family: var(--d-display); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; line-height: 0.9; color: var(--d-green); }
+.lead h3 { font-family: var(--d-display); font-size: 1.35rem; font-weight: 700; text-transform: uppercase; line-height: 1; }
+.lead p { font-size: 0.88rem; color: var(--d-muted); }
+.lead p strong { color: var(--d-ink); font-weight: 500; }
+.lead .links { margin-top: auto; }
+
 /* trajectory */
 .traj-wrap { overflow-x: auto; }
 .traj-wrap svg { display: block; width: 100%; min-width: 640px; height: auto; }
@@ -190,7 +202,7 @@ footer { font-family: var(--d-mono); font-size: 0.7rem; letter-spacing: 0.12em; 
   </header>
 
   <div class="feed" aria-label="Now">
-    <div><span class="t"><i class="rec"></i>Next · 2026-11-02</span><b>STRV</b><span>Senior Data Engineer, contract</span></div>
+    <div><span class="t"><i class="rec"></i>Next · 2026-11-02</span><b>STRV</b><span>Senior Data Engineer, full-time</span></div>
     <div><span class="t"><i></i>Live · since 2026-08</span><b>DreamPro</b><span>Management reporting in their own system</span></div>
     <div><span class="t"><i></i>Live · side channel</span><b>AIMOREAL</b><span>AI films and cost analytics for the studio</span></div>
   </div>
@@ -213,9 +225,23 @@ footer { font-family: var(--d-mono); font-size: 0.7rem; letter-spacing: 0.12em; 
     <div class="traj-wrap"><svg id="trajSvg" viewBox="0 0 1000 220" role="img" aria-label="Career path from HR analytics in 2018 to data products and AI in 2026"></svg></div>
   </section>
 
+  <section class="frame" aria-labelledby="lead-h">
+    <div class="idx"><span><b>04</b> / leadership</span><span>6 signals · no title required</span></div>
+    <h2 class="big" id="lead-h">Leadership</h2>
+    <p class="lede" style="font-size:1rem">Most of my leading happened without a manager title: holding context, aligning people, teaching and building communities.</p>
+    <div class="leads">
+      <div class="lead"><span class="k">HX Expeditions · informal lead</span><b>1 team</b><h3>The person with the context</h3><p>Held the business and platform context of the data team, <strong>unblocked colleagues</strong>, joined prioritisation and capacity planning and <strong>stepped in for the manager</strong> when needed.</p><div class="links"><a href="projects.html#hx-nexus">nexus</a></div></div>
+      <div class="lead"><span class="k">HX Expeditions · migration</span><b>30</b><h3>Scenarios to a shared fix</h3><p>Coordinated the data side of a system migration across <strong>data, IT and the migration team</strong>: every mismatch classified, reported and tracked to resolution.</p><div class="links"><a href="projects.html#hx-migration">reservation-migration</a></div></div>
+      <div class="lead"><span class="k">DreamPro · lead consultant</span><b>39</b><h3>Decisions with the client</h3><p>I <strong>lead the engagement</strong> with DreamPro's leadership: scope, priorities and a shared decision log, so every number has a documented reason.</p><div class="links"><a href="projects.html#dreampro">dreampro</a></div></div>
+      <div class="lead"><span class="k">ELC26 · Engineering Leaders Community</span><b>ELC26</b><h3>Interviewing leaders</h3><p>Interviewed speakers at the <strong>Engineering Leaders Community conference</strong>, for example Riz Iqbal, Director of Engineering at Superhuman, on trust and listening to your team.</p><div class="links"><a href="projects.html#elc26">elc26</a></div></div>
+      <div class="lead"><span class="k">techRebels · co-founder</span><b>2025</b><h3>Building a community</h3><p><strong>Co-founded techRebels</strong>, a social playground built around technology, and built its website. Public launch in 2027.</p><div class="links"><a href="projects.html#techrebels">techrebels</a></div></div>
+      <div class="lead"><span class="k">Teaching · since 2018</span><b>4</b><h3>Topics I train people in</h3><p><strong>dbt, SQL, data modelling and Fabric capacity</strong> for colleagues at HX, Power BI sessions earlier, and IT lessons and coding books for kids.</p><div class="links"><a href="projects.html#kids-tech">kids-tech</a></div></div>
+    </div>
+  </section>
+
   <div class="cols">
     <section class="frame" aria-labelledby="log-h">
-      <div class="idx"><span><b>04</b> / log</span><span>6 records · newest first</span></div>
+      <div class="idx"><span><b>05</b> / log</span><span>6 records · newest first</span></div>
       <h2 class="big" id="log-h">Experience</h2>
 
       <article class="rec">
@@ -306,19 +332,20 @@ footer { font-family: var(--d-mono); font-size: 0.7rem; letter-spacing: 0.12em; 
 
     <div class="side">
       <section class="frame" aria-labelledby="feat-h">
-        <div class="idx"><span><b>05</b> / features</span><span>weight</span></div>
+        <div class="idx"><span><b>06</b> / features</span><span>weight</span></div>
         <h2 class="big" id="feat-h">Strengths</h2>
         <div class="feat">
           <div><b>Business to data</b><span class="w">0.96</span><span class="bar" style="width:96%"></span><span class="d">I sit with the people who use the numbers and turn their questions into models.</span></div>
           <div><b>Semantic models</b><span class="w">0.95</span><span class="bar" style="width:95%"></span><span class="d">Clear grain, clear metrics, one definition everybody trusts.</span></div>
           <div><b>End-to-end ownership</b><span class="w">0.92</span><span class="bar" style="width:92%"></span><span class="d">From discovery and requirements to pipelines, reports and adoption.</span></div>
           <div><b>Calm in messy data</b><span class="w">0.90</span><span class="bar" style="width:90%"></span><span class="d">Migrations, duplicates, missing history: I find the rule that makes it explainable.</span></div>
+          <div><b>Leading without a title</b><span class="w">0.88</span><span class="bar" style="width:88%"></span><span class="d">Context holder, aligner and teacher. I create owners, not dependence.</span></div>
           <div><b>AI-assisted engineering</b><span class="w">0.82</span><span class="bar" style="width:82%"></span><span class="d">Agents and Claude Code daily, results always validated on the data.</span></div>
         </div>
       </section>
 
       <section class="frame" aria-labelledby="stack-h">
-        <div class="idx"><span><b>06</b> / stack.yml</span><span>utf-8</span></div>
+        <div class="idx"><span><b>07</b> / stack.yml</span><span>utf-8</span></div>
         <h2 class="big" id="stack-h">Stack</h2>
 <pre class="code"><span class="c"># tools I ship with</span>
 <span class="k">engineering</span><span class="p">:</span> <span class="p">[</span>sql, python, dbt, fabric, lakehouse, snowflake, airflow, rest-apis<span class="p">]</span>
@@ -328,7 +355,7 @@ footer { font-family: var(--d-mono); font-size: 0.7rem; letter-spacing: 0.12em; 
       </section>
 
       <section class="frame" aria-labelledby="edu-h">
-        <div class="idx"><span><b>07</b> / education</span><span>5 rows</span></div>
+        <div class="idx"><span><b>08</b> / education</span><span>5 rows</span></div>
         <h2 class="big" id="edu-h">Training data</h2>
         <table class="tbl">
           <tr><td>2021-24</td><td><b>Ing., Information Management</b><span>University of Hradec Králové. Thesis <a href="https://theses.cz/id/qwyja7/" target="_blank" rel="noopener">Dashboards automation</a>, Dean's Award.</span></td></tr>
@@ -342,7 +369,7 @@ footer { font-family: var(--d-mono); font-size: 0.7rem; letter-spacing: 0.12em; 
   </div>
 
   <section class="frame" aria-labelledby="ch-h">
-    <div class="idx"><span><b>08</b> / side channels</span><span>4 streams</span></div>
+    <div class="idx"><span><b>09</b> / side channels</span><span>4 streams</span></div>
     <h2 class="big" id="ch-h">What I build for fun</h2>
     <div class="chan">
       <div><span class="n">CH_01</span><h3>DATHEA</h3><p>A data-art studio turning real datasets about nature, science and culture into films.</p></div>
