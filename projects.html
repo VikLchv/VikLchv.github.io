@@ -486,8 +486,8 @@ function openProject(id) {
     <p>${esc(p.summary)}</p>
     ${nums ? `<div class="nums">${nums}</div>` : ""}
     ${p.did && p.did.length ? block("What I did", `<ul>${p.did.map(d => `<li>${esc(d)}</li>`).join("")}</ul>`) : ""}
-    ${block("Result", txt(p.result))}
-    ${block("Impact", txt(p.impact))}
+    ${p.result ? block("Result", txt(p.result)) : ""}
+    ${p.impact ? block("Impact", txt(p.impact)) : ""}
     ${p.stack && p.stack.length ? block("Stack", `<div class="tags">${p.stack.map(s => `<span class="tag">${esc(s)}</span>`).join("")}</div>`) : ""}
     ${block("Skills", `<div class="chips">${p.axes.map(a => `<button type="button" class="chip" data-ax="${a}">${AXL[a]}</button>`).join("")}</div>`)}
     ${p.links ? block("Links", p.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.l)}</a>`).join(" · ")) : ""}`;
